@@ -4,8 +4,24 @@ import SectionTabs from '@/pages/homepage/SectionTabs.vue';
 import SectionTab from '@/pages/homepage/SectionTab.vue';
 import BookCardVertical from '@/pages/homepage/BookCardVertical.vue';
 import BookCard from '@/components/BookCard.vue';
+import SvgIcon from '@/components/SvgIcon.vue';
 
-import { ref, reactive } from 'vue';
+import { ref, reactive, inject } from 'vue';
+
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Pagination, Autoplay, Navigation } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
+import homepageEcardBg from '@/assets/homepage-ecard-bg.jpg';
+
+const isLogin = inject('isLogin');
+const loginDialogShow = inject('loginDialogShow');
+
+const showLoginDialog = () => {
+    loginDialogShow.value = true
+}
 
 const categoryList = reactive([
     {
@@ -297,6 +313,12 @@ const borrowRankList = reactive([
         publishDate: '2020-10-10',
     }
 ])
+
+const libRecommendNavigation = {
+    prevEl: '.lib-recommend-prev',
+    nextEl: '.lib-recommend-next',
+}
+
 </script>
 
 <template>
@@ -314,12 +336,37 @@ const borrowRankList = reactive([
                         <div class="check-all">查看所有分类</div>
                     </div>
                 </div>
-                <div class="grid-banner"></div>
-                <div class="grid-login">
+                <div class="grid-banner">
+                    <Swiper :pagination="true" :modules="[Pagination, Autoplay]" :autoplay="{ delay: 2000 }">
+                        <swiper-slide v-for="item in 4">
+                            <div class="banner-item">{{ item }}</div>
+                        </swiper-slide>
+                    </Swiper>
+                </div>
+                <div class="grid-login" v-if="isLogin === false">
                     <div class="title">欢迎您来到</div>
                     <div class="title">衢州市图书馆</div>
                     <div class="subtitle">阅读是一种感悟人生的艺术</div>
-                    <div class="login-button center">立即登录</div>
+                    <div class="login-button center" @click="showLoginDialog">立即登录</div>
+                </div>
+                <div class="grid-login" v-else>
+                    <div class="user-info space-between">
+                        <div class="">
+                            <div class="user-name">欢迎 李倩倩</div>
+                            <div class="lib-name">衢州市图书馆</div>
+                        </div>
+                        <div class="avatar center"><img src="" alt=""></div>
+                    </div>
+                    <div class="my-books-info flex">
+                        <div>
+                            <div class="number">10</div>
+                            <div class="label">我的借阅</div>
+                        </div>
+                        <div>
+                            <div class="number">6</div>
+                            <div class="label">我的书单</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="grid-notice">
                     <div class="title">通知公告</div>
@@ -341,17 +388,30 @@ const borrowRankList = reactive([
             <div class="section-lib-recommend">
                 <Section title="图书馆推荐书单">
                     <div class="section-content lib-recommend flex">
-                        <div class="recommend-item flex-column" v-for="item in 3">
-                            <div class="theme-image"><img src="" alt=""></div>
-                            <div class="theme-title">一路向西 丝绸之路</div>
-                            <div class="theme-subtitle">中华文化的博大精深</div>
-                            <div class="theme-intro">
-                                中国的丝绸、瓷器、陶器、茶叶等大量珍贵产品和科学文化，除通过横贯大陆的陆上交通线路大量输往中亚、西亚和非洲、欧洲之外，也通过海上源源不断地销往东亚、大洋洲、美洲和世界各地。
-                            </div>
-                            <div class="check-detail center">查看详情</div>
-                        </div>
-                    </div>
 
+                        <Swiper :slidesPerView="3" :spaceBetween="24" :navigation="libRecommendNavigation"
+                            :modules="[Navigation]">
+                            <swiper-slide v-for="item in 6">
+                                <div class="recommend-item flex-column">
+                                    <div class="theme-image"><img src="" alt=""></div>
+                                    <div class="theme-title">一路向西 丝绸之路</div>
+                                    <div class="theme-subtitle">中华文化的博大精深</div>
+                                    <div class="theme-intro">
+                                        中国的丝绸、瓷器、陶器、茶叶等大量珍贵产品和科学文化，除通过横贯大陆的陆上交通线路大量输往中亚、西亚和非洲、欧洲之外，也通过海上源源不断地销往东亚、大洋洲、美洲和世界各地。
+                                    </div>
+                                    <div class="check-detail center">查看详情</div>
+                                </div>
+                            </swiper-slide>
+                        </Swiper>
+
+                        <div class="swiper-navigate lib-recommend-prev">
+                            <SvgIcon name="icon-left" class="icon" />
+                        </div>
+                        <div class="swiper-navigate lib-recommend-next">
+                            <SvgIcon name="icon-right" class="icon" />
+                        </div>
+
+                    </div>
                 </Section>
             </div>
             <div class="section-popular-category">
@@ -386,7 +446,7 @@ const borrowRankList = reactive([
                 </SectionTabs>
             </div>
             <div class="section-image-floor space-between">
-                <div class="image-container"><img src="" alt=""></div>
+                <div class="image-container"><img :src="homepageEcardBg" alt=""></div>
                 <div class="image-container"><img src="" alt=""></div>
                 <div class="image-container"><img src="" alt=""></div>
             </div>
@@ -541,6 +601,34 @@ const borrowRankList = reactive([
     }
 }
 
+.grid-banner {
+    background-color: #b3b3b3;
+    border-radius: 8px;
+    overflow: hidden;
+
+    .banner-item {
+        width: 589px;
+        height: 390px;
+    }
+
+    &:deep(.swiper-pagination-bullets) {
+        padding-right: 20px;
+        text-align: right;
+
+        .swiper-pagination-bullet {
+            width: 6px;
+            height: 7px;
+            border-radius: 3px;
+            background-color: #fff;
+            transition: all 0.3s ease-in-out;
+
+            &.swiper-pagination-bullet-active {
+                width: 20px;
+            }
+        }
+    }
+}
+
 .grid-login {
     width: 285px;
     height: 201px;
@@ -575,6 +663,60 @@ const borrowRankList = reactive([
         font-weight: 700;
         margin-top: 21px;
         cursor: pointer;
+    }
+
+    .user-info {
+        .user-name {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 35px;
+            color: #FFFFFF;
+            margin-top: 8px;
+        }
+
+        .lib-name {
+            font-size: 12px;
+            line-height: 17px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #fff;
+
+            img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .my-books-info {
+        margin-top: 47px;
+        > div {
+            &:first-child {
+                padding-right: 30px;
+                border-right: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            &:last-child {
+                padding-left: 32px;
+            }
+        }
+        .number {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 35px;
+            color: #FFFFFF;
+            margin-bottom: 3px;
+        }
+
+        .label {
+            font-size: 14px;
+            line-height: 20px;
+            color: #FFFFFF;
+        }
     }
 }
 
@@ -648,11 +790,42 @@ const borrowRankList = reactive([
     margin-top: 30px;
 }
 
+
 .section-content.lib-recommend {
     height: 446px;
     padding: 40px 36px 30px;
     background-color: #fff;
     border-radius: 0 0 8px 8px;
+    position: relative;
+
+    .swiper-navigate {
+        position: absolute;
+        z-index: 10;
+        top: 171px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #fff;
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .icon {
+            width: 7px;
+            height: 14px;
+            color: #BDC7E1;
+        }
+
+        &.lib-recommend-prev {
+            left: -20px;
+        }
+
+        &.lib-recommend-next {
+            right: -20px;
+        }
+    }
 
     .recommend-item {
         width: 360px;
@@ -744,11 +917,18 @@ const borrowRankList = reactive([
         width: 386px;
         height: 130px;
         border-radius: 8px;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
 
 }
 
 .section-recommend_rank {
+    margin-top: 30px;
+
     .left {
         width: 794px;
     }
@@ -829,7 +1009,8 @@ const borrowRankList = reactive([
 
 }
 
-.section-popular,.section-recommend {
+.section-popular,
+.section-recommend {
     margin-top: 30px;
     background-color: #fff;
     border-radius: 0 0 8px 8px;

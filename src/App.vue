@@ -4,8 +4,12 @@ import SvgIcon from '@/components/SvgIcon.vue'
 import Button from '@/components/Button.vue'
 import TopNav from '@/components/TopNav.vue'
 
-import { defineProps, ref, reactive } from 'vue';
+import { defineProps, ref, reactive, provide } from 'vue';
+import { useRouter } from 'vue-router';
 
+
+
+const router = useRouter();
 
 const advanceSearchShow = ref(false)
 const showAdvanceSearch = () => {
@@ -23,21 +27,29 @@ const hideSearchRecommend = () => {
   searchRecommendShow.value = false
 }
 
+
+const isLogin = ref(false)
+
+const loginDialogShow = ref(false)
+const formType = ref('login') // login | register
+const loginType = ref('ecard') // ecard | id
+const registerSuccessDialogShow = ref(false)
+
+
+const registerSumit = () => {
+  loginDialogShow.value = false
+  registerSuccessDialogShow.value = true
+}
+
+provide('isLogin', isLogin)
+provide('loginDialogShow', loginDialogShow)
+
 </script>
 
 <template>
-  <!-- <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-        <a href="https://vuejs.org/" target="_blank">
-          <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-        </a>
-      </div>
-      <HelloWorld msg="Vite + Vue" /> -->
   <div class="page-header justify-center">
     <div class="nav-bar space-between align-center">
-      <div class="logo-box align-center">
+      <div class="logo-box align-center" @click="router.push('/')">
         <SvgIcon name="lib-logo" class="icon-logo" />
         <div class="lib-name">
           <div class="title">衢州市图书馆</div>
@@ -81,12 +93,18 @@ const hideSearchRecommend = () => {
           <SvgIcon name="icon-my-order" class="icon" />
           我的订单
         </div>
-        <div class="right-item login">
+        <div class="right-item login" @click="loginDialogShow = true" v-if="isLogin === false">
           <SvgIcon name="icon-login" class="icon" />
           登录/注册
         </div>
+        <div class="right-item login" @click="loginDialogShow = true" v-else>
+          <div class="username">李倩倩</div>
+          <div class="avatar"><img src="" alt=""></div>
+        </div>
+
       </div>
     </div>
+
     <div class="advance-search" v-show="advanceSearchShow" @click.self="hideAdvanceSearch">
       <div class="container center">
         <div class="search-form">
@@ -125,25 +143,90 @@ const hideSearchRecommend = () => {
 
     </div>
   </div>
+
   <div class="page-content">
     <router-view></router-view>
   </div>
-  <div class="page-footer"></div>
+
+  <div class="page-footer">
+    <div>
+      <a>网站首页</a>
+      <a>网站地图</a>
+      <a>法律声明</a>
+    </div>
+    <div>
+      <span>本服务由浙江政务服务网、衢州市图书馆提供</span>
+      <span>服务咨询热线：0570-3022207</span>
+    </div>
+    <div>
+      <span>粤ICP备 1234567890123 号</span>
+      <span>公安网备案 33010602004088号</span>
+    </div>
+  </div>
+
+  <el-dialog class="login-dialog" v-model="loginDialogShow">
+    <div class="dialog-wrapper">
+      <div class="login" v-if="formType === 'login'">
+        <div class="tabs flex space-between">
+          <div class="tab ecard" :class="{ 'active': loginType === 'ecard' }" @click="loginType = 'ecard'">读者证登录</div>
+          <div class="tab id" :class="{ 'active': loginType === 'id' }" @click="loginType = 'id'">身份证登录</div>
+        </div>
+        <div class="form-box">
+          <el-form>
+            <el-form-item>
+              <el-input v-if="loginType === 'ecard'" placeholder="请输入读者证"></el-input>
+              <el-input v-if="loginType === 'id'" placeholder="请输入身份证"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input placeholder="请输入密码"></el-input>
+            </el-form-item>
+            <el-form-item class="code-item">
+              <el-input placeholder="请输入验证码" class="code-input"></el-input>
+              <div class="code-image"></div>
+            </el-form-item>
+            <Button class="button" @click="() => { isLogin = true; loginDialogShow = false }">登录</Button>
+          </el-form>
+          <div class="text-button register" @click="formType = 'register'">没有读者证？立即办证</div>
+        </div>
+      </div>
+      <div class="register" v-if="formType === 'register'">
+        <div class="header space-between">
+          <div class="title">注册读者证</div>
+          <span class="text-button login" @click="formType = 'login'">返回登录</span>
+        </div>
+        <div class="form-box">
+          <el-form>
+            <el-form-item>
+              <el-select placeholder="请选择所属馆"></el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-input placeholder="请填写真实姓名"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input placeholder="请输入身份证号"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-input placeholder="请输入手机号码"></el-input>
+            </el-form-item>
+            <Button class="button" @click="registerSumit">注册</Button>
+          </el-form>
+        </div>
+      </div>
+    </div>
+  </el-dialog>
+
+  <el-dialog class="register-success-dialog" :show-close="false" title="你的证件已经办理成功" v-model="registerSuccessDialogShow">
+    <div class="dialog-content">
+
+      你的身份证号码后6位为默认登录密码，为保障你的账户安全，请在登录后及时修改密码！
+
+    </div>
+    <Button class="button"
+      @click="() => { registerSuccessDialogShow = false; loginDialogShow = true; loginType = 'ecard' }">立即登录</Button>
+  </el-dialog>
 </template>
 
-<style scoped lang="scss">
-/* .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-} */
+<style lang="scss">
 
 .page-header {
   width: 100vw;
@@ -167,6 +250,7 @@ const hideSearchRecommend = () => {
     width: 67px;
     height: 55px;
     margin-right: 12px;
+    cursor: pointer;
   }
 
   .lib-name {
@@ -204,8 +288,27 @@ const hideSearchRecommend = () => {
     .icon {
       width: 24px;
       height: 24px;
-      color: var(--color-1);
+      color: var(--color1);
       margin-right: 8px;
+    }
+
+    .username {
+      margin-right: 10px;
+    }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+
+      }
+
     }
 
   }
@@ -231,10 +334,6 @@ const hideSearchRecommend = () => {
     left: -1px;
   }
 
-  /* .search-box .el-input .el-input__wrapper {
-    border-radius: 0;
-    border-radius: 8px 0 0 8px;
-  } */
   .advance-text {
     font-size: 14px;
     line-height: 20px;
@@ -261,7 +360,8 @@ const hideSearchRecommend = () => {
       padding-bottom: 14px;
       background-color: #fff;
       border-radius: 8px;
-      > div:not(:first-child) {
+
+      >div:not(:first-child) {
         margin-top: 12px;
       }
 
@@ -296,6 +396,7 @@ const hideSearchRecommend = () => {
         margin-right: 16px;
         margin-bottom: 12px;
         font-weight: 500;
+
         &.active {
           background-color: var(--color1);
           color: #fff;
@@ -305,6 +406,7 @@ const hideSearchRecommend = () => {
 
 
   }
+
 }
 
 .page-header .advance-search {
@@ -395,5 +497,39 @@ const hideSearchRecommend = () => {
   bottom: 0;
   left: 0;
   z-index: 100;
+
+  background-color: #063376;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  >div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:not(:last-child) {
+      margin-bottom: 12px;
+    }
+
+    font-size: 12px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+
+    span {
+      margin-right: 23px;
+    }
+
+    &:first-child {
+      a {
+        color: #fff;
+        margin-right: 36px;
+      }
+    }
+
+
+
+  }
 }
 </style>

@@ -4,6 +4,10 @@ import Button from '@/components/Button.vue';
 import SvgIcon from '@/components/SvgIcon.vue';
 import Steps from '@/components/Steps.vue';
 import BookTable from '@/components/BookTable.vue';
+import PopConfirm from '@/components/PopConfirm.vue';
+
+
+
 </script>
 
 <template>
@@ -17,9 +21,9 @@ import BookTable from '@/components/BookTable.vue';
                 <div class="list-container">
                     <div class="header">衢州市图书馆 (3)</div>
                     <div class="list-table">
-                        <BookTable />
+                        <BookTable hasCheckbox hasOperation operationType="delete"/>
                         <div class="actions space-between">
-                            <el-checkbox>全选</el-checkbox>
+                            <el-checkbox class="round">全选</el-checkbox>
                             <div class="right align-center">
                                 <span class="number-text">已选中2本图书</span>
                                 <Button class="delete" buttonStyle="line">删除</Button>
@@ -29,6 +33,7 @@ import BookTable from '@/components/BookTable.vue';
                     </div>
                 </div>
             </div>
+            
         </div>
 
     </div>
@@ -36,7 +41,7 @@ import BookTable from '@/components/BookTable.vue';
 
 <style lang="scss" scoped>
 .page-main {
-    width: 1200px;
+    width: 1000px;
 }
 .book-list {
     .title {
@@ -61,90 +66,6 @@ import BookTable from '@/components/BookTable.vue';
             color: #8AA2C5;
             margin-bottom: 20px;
         }
-
-        /* .list-table {
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                border-top: 1px solid #E6EDF5;
-            }
-
-            thead {
-                height: 40px;
-                background-color: #F6FAFF;
-                font-size: 14px;
-                line-height: 20px;
-                color: #8AA2C5;
-
-                th:not(:first-child) {
-                    text-align: left;
-                }
-            }
-
-            tbody {
-                font-size: 14px;
-                line-height: 20px;
-                color: #8AA2C5;
-
-                tr {
-                    height: 120px;
-
-                    &.active {
-                        border-top: 1px solid #E6EDF5;
-                        border-bottom: 1px solid #E6EDF5;
-                        background-color: #F6FAFF;
-                    }
-
-                    &:last-child {
-                        border-bottom: 1px solid #E6EDF5;
-                    }
-                }
-
-                .cell-wrapper {
-                    padding: 18px 0;
-                    display: flex;
-                    align-items: center;
-
-                    &.padding-left {
-                        padding-left: 20px;
-                    }
-
-                    &.delete {
-                        padding-right: 46px;
-                        color: #FF8181;
-                        cursor: pointer;
-                    }
-                }
-
-                .book-image {
-                    width: 60px;
-                    height: 84px;
-                    margin-right: 19px;
-
-                    img {
-                        width: 88.3%;
-                        height: 88.3%;
-                    }
-                }
-
-                .book-name {
-                    font-weight: 700;
-                    font-size: 14px;
-                    line-height: 20px;
-                    color: #234B70;
-                }
-
-                .el-checkbox {
-                    width: 20px;
-                    height: 20px;
-                    margin-right: 20px;
-
-                }
-
-            }
-
-            
-        } */
 
         .actions {
                 margin-top: 20px;

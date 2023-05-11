@@ -20,7 +20,56 @@ const routes = [
     {
         path: '/order',
         component: () => import('@/pages/Order.vue')
+    },
+    {
+        path: '/my-borrow',
+        component: () => import('@/pages/MyBorrow.vue')
+    },
+    {
+        path: '/my-collect',
+        component: () => import('@/pages/MyCollect.vue')
+    },
+    {
+        path: '/receiver-manage',
+        component: () => import('@/pages/ReceiverManage.vue')
+    },
+    {
+        path: '/changepwd',
+        component: () => import('@/pages/ChangePwd.vue')
+    },
+    {
+        path: '/order-list',    
+        component: () => import('@/pages/OrderList.vue')
+    },
+    {
+        path: '/order-detail',
+        component: () => import('@/pages/OrderDetail.vue')
+    },
+    {
+        path: '/reader-recommend',
+        component: () => import('@/pages/ReaderRecommend.vue')
+    },
+    {
+        path: '/borrow-rank',
+        component: () => import('@/pages/BorrowRank.vue')
+    },
+    {
+        path: '/lib-recommend',
+        component: () => import('@/pages/LibRecommend.vue')
+    },
+    {
+        path: '/lib-recommend-detail',
+        component: () => import('@/pages/LibRecommendDetail.vue')
+    },
+    {
+        path: '/notice-list',
+        component: () => import('@/pages/NoticeList.vue')
+    },
+    {
+        path: '/notice-detail',
+        component: () => import('@/pages/NoticeDetail.vue')
     }
+
 
 ]
 

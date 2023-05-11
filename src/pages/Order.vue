@@ -3,13 +3,14 @@ import Steps from '@/components/Steps.vue';
 import BookTable from '@/components/BookTable.vue';
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/SvgIcon.vue';
+import PopConfirm from '@/components/PopConfirm.vue';
 
 </script>
 
 <template>
     <div class="order-page justify-center">
         <div class="page-main">
-            <Steps />
+            <Steps :step="2" />
 
             <div class="fill-order">
                 <div class="title">填写订单</div>
@@ -23,9 +24,11 @@ import SvgIcon from '@/components/SvgIcon.vue';
                     </div>
 
                     <div class="content">
-                        <div class="receiver-info-box space-between">
+                        <div class="receiver-info-box space-between" :class="{
+                            'active': item == 1
+                        }" v-for="item in 2">
                             <div class="flex">
-                                <el-checkbox></el-checkbox>
+                                <el-checkbox class="round"></el-checkbox>
                                 <div class="info-list">
                                     <div class="info-item">
                                         <div class="item-label">收件人</div>
@@ -43,7 +46,9 @@ import SvgIcon from '@/components/SvgIcon.vue';
                             </div>
                             <div class="align-center">
                                 <SvgIcon name="icon-edit" class="icon-edit" />
-                                <SvgIcon name="icon-delete" class="icon-delete" />
+                                <PopConfirm title="删除地址吗？" class="icon-box">
+                                    <SvgIcon name="icon-delete" class="icon-delete" />
+                                </PopConfirm>
                             </div>
                         </div>
                     </div>
@@ -76,12 +81,12 @@ import SvgIcon from '@/components/SvgIcon.vue';
                 <div class="container align-center payment-method">
                     <div class="label">支付方式</div>
                     <div class="align-center">
-                        <div class="method wechat">
-                            <el-checkbox>微信</el-checkbox>
+                        <div class="method wechat active">
+                            <el-checkbox class="round">微信</el-checkbox>
                             <SvgIcon name="icon-wechat" class="icon"/>
                         </div>
                         <div class="method alipay">
-                            <el-checkbox>支付宝</el-checkbox>
+                            <el-checkbox class="round">支付宝</el-checkbox>
                             <SvgIcon name="icon-alipay" class="icon"/>
                         </div>
                     </div>
@@ -98,7 +103,7 @@ import SvgIcon from '@/components/SvgIcon.vue';
 
 <style lang="scss" scoped>
 .page-main {
-    width: 1200px;
+    width: 1000px;
 }
 
 .fill-order {
@@ -148,15 +153,18 @@ import SvgIcon from '@/components/SvgIcon.vue';
 
         .receiver-info-box {
             background: #FBFBFB;
-            border: 1px solid #C1D4EF;
             border-radius: 6px;
             padding: 20px 30px 24px 20px;
             border-radius: 6px;
+            &:not(:last-child) {
+                margin-bottom: 20px;
+            }
+            &.active {
+                border: 1px solid #C1D4EF;
+            }
 
             .el-checkbox {
                 align-self: center;
-                width: 20px;
-                height: 20px;
                 margin-right: 24px;
             }
 
@@ -177,6 +185,11 @@ import SvgIcon from '@/components/SvgIcon.vue';
                 }
             }
 
+        
+            .icon-box {
+                width: 24px;
+                height: 24px;
+            }
             .icon-edit,
             .icon-delete {
                 width: 24px;
@@ -240,12 +253,11 @@ import SvgIcon from '@/components/SvgIcon.vue';
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+                &.active {
+                    border: 1px solid var(--color1);
+                }
                 &:first-child {
                     margin-right: 20px;
-                }
-                .el-checkbox {
-                    width: 20px;
-                    height: 20px;
                 }
 
                 .icon {
