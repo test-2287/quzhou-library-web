@@ -8,7 +8,6 @@ const bookData = reactive({
     name: '哲学，为人生烦恼找答案1',
     author: '[美]杰弗里·罗森 著',
     publisher: '北京联合出版公司',
-    img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
 })
 </script>
 

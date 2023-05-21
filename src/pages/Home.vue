@@ -7,6 +7,7 @@ import BookCard from '@/components/BookCard.vue';
 import SvgIcon from '@/components/SvgIcon.vue';
 
 import { ref, reactive, inject } from 'vue';
+import { useRouter } from 'vue-router'
 
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Pagination, Autoplay, Navigation } from 'swiper';
@@ -15,6 +16,12 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import homepageEcardBg from '@/assets/homepage-ecard-bg.jpg';
+import libRecommend1 from '@/assets/lib-recommend-1.svg';
+import homepageBanner from '@/assets/homepage-banner.svg';
+import homepageBanner2 from '@/assets/homepage-banner-2.svg';
+import homepageBanner3 from '@/assets/homepage-banner-3.svg';
+
+const router =  useRouter()
 
 const isLogin = inject('isLogin');
 const loginDialogShow = inject('loginDialogShow');
@@ -27,6 +34,9 @@ const categoryList = reactive([
     {
         name: '马克思主义',
         number: 59,
+        subcategory: [
+            '西方哲学', '东方哲学', '古典哲学', '近代哲学', '现代哲学', '马克思主义哲学', '中国哲学史', '外国哲学史', '逻辑学', '伦理学', '美学', '宗教学'
+        ]
     },
     {
         name: '哲学',
@@ -79,6 +89,14 @@ const categoryList = reactive([
     {
         name: '天文学、地球科学',
         number: 59,
+    },
+    {
+        name: '天文学、地球科学',
+        number: 59,
+    },
+    {
+        name: '天文学、地球科学',
+        number: 59,
     }
 ])
 
@@ -87,7 +105,6 @@ const newArrivalBookList = reactive([
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
         showPublisher: false,
         isSmall: true
     },
@@ -95,7 +112,6 @@ const newArrivalBookList = reactive([
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
         showPublisher: false,
         isSmall: true
     },
@@ -103,7 +119,6 @@ const newArrivalBookList = reactive([
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
         showPublisher: false,
         isSmall: true
     },
@@ -111,7 +126,6 @@ const newArrivalBookList = reactive([
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
         showPublisher: false,
         isSmall: true
     },
@@ -119,7 +133,6 @@ const newArrivalBookList = reactive([
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
         showPublisher: false,
         isSmall: true
     }
@@ -130,61 +143,51 @@ const popularCategoryList1 = reactive([
         name: '哲学，为人生烦恼找答案1',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     }
 ])
 const popularCategoryList2 = reactive([
@@ -192,61 +195,51 @@ const popularCategoryList2 = reactive([
         name: '哲学，为人生烦恼找答案2',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     },
     {
         name: '哲学，为人生烦恼找答案',
         author: '[美]杰弗里·罗森 著',
         publisher: '北京联合出版公司',
-        img: 'https://img3.doubanio.com/view/subject/l/public/s33669267.jpg',
     }
 ])
 
@@ -319,6 +312,7 @@ const libRecommendNavigation = {
     nextEl: '.lib-recommend-next',
 }
 
+
 </script>
 
 <template>
@@ -329,17 +323,20 @@ const libRecommendNavigation = {
                 <div class="grid-category">
                     <div class="category-header">全部图书分类</div>
                     <div class="category-list">
-                        <div class="category-item" v-for="item in categoryList">
+                        <div class="category-item" v-for="item in categoryList" @click="router.push('/category')">
                             <span class="name">{{ item.name }}</span>
                             <span class="number">({{ item.number }})</span>
+                            <div class="subcategory" v-if="item.subcategory && item.subcategory.length">
+                                <span class="subcategory-item" v-for="subItem in item.subcategory" @click="router.push('/category')">{{ subItem }}</span>
+                            </div>
                         </div>
-                        <div class="check-all">查看所有分类</div>
+                        <div class="check-all" @click="router.push('/category')">查看所有分类</div>
                     </div>
                 </div>
                 <div class="grid-banner">
                     <Swiper :pagination="true" :modules="[Pagination, Autoplay]" :autoplay="{ delay: 2000 }">
                         <swiper-slide v-for="item in 4">
-                            <div class="banner-item">{{ item }}</div>
+                            <div class="banner-item" :style="{'background-image': `url(${homepageBanner})`}">{{ item }}</div>
                         </swiper-slide>
                     </Swiper>
                 </div>
@@ -393,13 +390,13 @@ const libRecommendNavigation = {
                             :modules="[Navigation]">
                             <swiper-slide v-for="item in 6">
                                 <div class="recommend-item flex-column">
-                                    <div class="theme-image"><img src="" alt=""></div>
+                                    <div class="theme-image"><img :src="libRecommend1" alt=""></div>
                                     <div class="theme-title">一路向西 丝绸之路</div>
                                     <div class="theme-subtitle">中华文化的博大精深</div>
                                     <div class="theme-intro">
                                         中国的丝绸、瓷器、陶器、茶叶等大量珍贵产品和科学文化，除通过横贯大陆的陆上交通线路大量输往中亚、西亚和非洲、欧洲之外，也通过海上源源不断地销往东亚、大洋洲、美洲和世界各地。
                                     </div>
-                                    <div class="check-detail center">查看详情</div>
+                                    <div class="check-detail center" @click="router.push('/lib-recommend-detail')">查看详情</div>
                                 </div>
                             </swiper-slide>
                         </Swiper>
@@ -447,19 +444,19 @@ const libRecommendNavigation = {
             </div>
             <div class="section-image-floor space-between">
                 <div class="image-container"><img :src="homepageEcardBg" alt=""></div>
-                <div class="image-container"><img src="" alt=""></div>
-                <div class="image-container"><img src="" alt=""></div>
+                <div class="image-container" @click="router.push('/lib-recommend-detail')"><img :src="homepageBanner2" alt=""></div>
+                <div class="image-container" @click="router.push('/lib-recommend-detail')"><img :src="homepageBanner3" alt=""></div>
             </div>
             <div class="section-recommend_rank space-between">
                 <div class="left">
-                    <Section title="读者推荐" :showMore="true">
+                    <Section title="读者推荐" :showMore="true" @onMore="router.push('/reader-recommend')">
                         <div class="section-content reader-recommend">
                             <BookCard v-for="item in readerRecommendList" v-bind="item" />
                         </div>
                     </Section>
                 </div>
                 <div class="right">
-                    <Section title="借阅排行" :showMore="true">
+                    <Section title="借阅排行" :showMore="true" @onMore="router.push('/borrow-rank')">
                         <div class="section-content borrow-rank">
                             <div class="book-item" v-for="(item, index) in borrowRankList">
                                 <BookCard v-bind="item" :rank="index + 1" size="small" type="compact" />
@@ -545,7 +542,7 @@ const libRecommendNavigation = {
 
 .grid-category {
     border-radius: 8px;
-    overflow: hidden;
+    /* overflow: scroll; */
     box-shadow: var(--box-shadow1);
 
     .category-header {
@@ -556,12 +553,14 @@ const libRecommendNavigation = {
         font-weight: 700;
         color: #fff;
         background-color: #1E7CE6;
+        border-radius: 8px 8px 0 0;
     }
 
     .category-list {
         height: 677px;
         padding: 14px 16px 81px;
         background-color: #fff;
+        border-radius: 0 0 8px 8px;
         position: relative;
 
         .category-item {
@@ -586,13 +585,56 @@ const libRecommendNavigation = {
             .number {
                 color: #BEBEBE;
             }
+
+
+            position: relative;
+            .subcategory {
+                display: none;
+                position: absolute;
+                z-index: 100;
+                top: 0;
+                left: 100%;
+                background-color: #fff;
+                box-shadow: 0px 8px 8px rgba(134, 182, 255, 0.15);
+                border-radius: 4px;
+                padding: 20px 24px;
+                padding-bottom: 12px;
+                width: 500px;
+                flex-wrap: wrap;
+
+                .subcategory-item {
+                    font-size: 14px;
+                    line-height: 20px;
+                    font-weight: 500;
+                    margin-right: 30px;
+                    margin-bottom: 12px;
+                    border-radius: 4px;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: var(--color1)
+                    }
+                }
+            }
+            &:hover {
+                .subcategory {
+                    display: flex;
+                }
+            }
         }
+
+
 
         .check-all {
             position: absolute;
-            bottom: 21px;
-            left: 50%;
-            transform: translateX(-50%);
+            width: 100%;
+            height: 41px;
+            border-radius: 0 0 8px 8px;
+            text-align: center;
+            background-color: #fff;
+            bottom: 0;
+            left: 0;
+            /* transform: translateX(-50%); */
             font-size: var(--font-size2);
             line-height: var(--line-height2);
             color: #3D95E5;
@@ -695,15 +737,18 @@ const libRecommendNavigation = {
 
     .my-books-info {
         margin-top: 47px;
-        > div {
+
+        >div {
             &:first-child {
                 padding-right: 30px;
                 border-right: 1px solid rgba(255, 255, 255, 0.3);
             }
+
             &:last-child {
                 padding-left: 32px;
             }
         }
+
         .number {
             font-weight: 700;
             font-size: 24px;
@@ -1032,5 +1077,4 @@ const libRecommendNavigation = {
             margin-right: 0;
         }
     }
-}
-</style>
+}</style>

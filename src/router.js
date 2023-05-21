@@ -22,6 +22,10 @@ const routes = [
         component: () => import('@/pages/Order.vue')
     },
     {
+        path: '/pay-result',
+        component: () => import('@/pages/PayResult.vue')
+    },
+    {
         path: '/my-borrow',
         component: () => import('@/pages/MyBorrow.vue')
     },
@@ -68,6 +72,14 @@ const routes = [
     {
         path: '/notice-detail',
         component: () => import('@/pages/NoticeDetail.vue')
+    },
+    {
+        path: '/category',
+        component: () => import('@/pages/Category.vue')
+    },
+    {
+        path: '/borrow-history',
+        component: () => import('@/pages/BorrowHistory.vue')
     }
 
 

@@ -3,6 +3,10 @@ import Section from '@/pages/homepage/Section.vue';
 import LibRecommendItem from '@/components/LibRecommendItem.vue';
 
 import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+
+import libRecommend1 from '@/assets/lib-recommend-1.svg';
+
 
 const bookData = reactive({
     name: '哲学，为人生烦恼找答案',

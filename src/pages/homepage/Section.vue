@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 
 const props = defineProps({
     title: {
@@ -9,10 +9,13 @@ const props = defineProps({
     showMore: {
         type: Boolean,
         default: false
-    }
+    },
 });
 
-
+const emit = defineEmits(['onMore']);
+const onMore = () => {
+    emit('onMore');
+}
 
 </script>
 
@@ -20,7 +23,7 @@ const props = defineProps({
     <div class="homepage-section">
         <div class="section-header space-between align-center">
             <div class="section-title align-center">{{ title }}</div>
-            <div class="more" v-if="showMore">更多</div>
+            <div class="more" v-if="showMore" @click="onMore">更多</div>
         </div>
         <slot></slot>
     </div>

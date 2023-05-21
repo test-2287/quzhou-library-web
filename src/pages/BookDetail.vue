@@ -6,7 +6,10 @@ import SvgIcon from '@/components/SvgIcon.vue';
 import SectionTabs from './homepage/SectionTabs.vue';
 import SectionTab from './homepage/SectionTab.vue';
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { ArrowRight } from '@element-plus/icons-vue'
+
+const router = useRouter()
 
 const bookInfo = {
     name: '哲学，为人生烦恼找答案',
@@ -22,6 +25,15 @@ const toggleLibStockShow = () => {
 const collect = ref(false)
 const toggleCollect = () => {
     collect.value = !collect.value
+}
+
+const libSelect = ref(0)
+const libSelectShow = ref(false)
+const showLibSelect = () => {
+    libSelectShow.value = true
+}
+const hideLibSelect = () => {
+    libSelectShow.value = false
 }
 </script>
 
@@ -62,13 +74,32 @@ const toggleCollect = () => {
                                 <div class="item-content">有库存</div>
                             </div>
                             <div class="action-box flex">
-                                <Button class="action-order">立即下单</Button>
+                                <Button class="action-order" @click="showLibSelect">立即下单</Button>
                                 <Button class="action-add_cart" buttonStyle="line">加入书单</Button>
                                 <Button class="action-collect" buttonStyle="line" @click="toggleCollect">
                                     <SvgIcon :name="`star-${collect ? 'fill' : 'line'}`" class="icon"
                                         :class="{ 'star-fill': collect, 'star-line': !collect }" />
                                     <span>收藏</span>
                                 </Button>
+                                <div class="lib-select-box" v-show="libSelectShow">
+                                    <div class="box-header">
+                                        <div class="box-title">选择配送场馆</div>
+                                    </div>
+                                    <div class="lib-list">
+                                        <el-radio-group v-model="libSelect">
+                                            <el-radio :label="1">衢州市图书馆</el-radio>
+                                            <el-radio :label="2">衢州市图书馆</el-radio>
+                                            <el-radio :label="3">衢州市图书馆</el-radio>
+                                            <el-radio :label="4">衢州市图书馆</el-radio>
+                                            <el-radio :label="5">衢州市图书馆</el-radio>
+                                            <el-radio :label="6">衢州市图书馆</el-radio>
+                                        </el-radio-group>
+                                    </div>
+                                    <div class="actions justify-center">
+                                        <Button buttonStyle="line" class="button" @click="hideLibSelect">取消</Button>
+                                        <Button class="button" @click="router.push('/order')">确认</Button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -131,7 +162,7 @@ const toggleCollect = () => {
 
                             <SectionTab title="作者简介">
                                 <div class="tab-content author-info center">
-                                    <div class="empty-box flex-column justify-center">
+                                    <div class="empty-box flex-column center">
                                         <SvgIcon name="book-detail-empty" class="icon-empty" />
                                         <span>抱歉！暂时没有内容</span>
                                     </div>
@@ -266,6 +297,58 @@ const toggleCollect = () => {
                 color: var(--color1);
             }
         }
+
+        position: relative;
+
+        .lib-select-box {
+            position: absolute;
+            top: 53px;
+            left: 0;
+            width: 480px;
+            padding: 20px 30px;
+            padding-bottom: 22px;
+            background-color: #fff;
+            border: 1px solid #E6EDF5;
+            box-shadow: 0px 8px 8px rgba(134, 182, 255, 0.15);
+            border-radius: 8px;
+
+            .box-title {
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 20px;
+                color: #33608A;
+                margin-bottom: 16px;
+            }
+
+            &:deep(.el-radio) {
+                margin-right: 27px;
+
+                .el-radio__input.is-checked+.el-radio__label {
+                    color: #33608A;
+                }
+                .el-radio__label {
+                    color: #8AA2C5;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+            }
+
+            .actions {
+                margin-top: 10px;
+
+                >*:not(:last-child) {
+                    margin-right: 20px;
+                }
+
+                .button {
+                    width: 90px;
+                    height: 32px;
+                    border-radius: 16px;
+                    font-weight: bold;
+                }
+            }
+        }
     }
 }
 
@@ -374,6 +457,11 @@ const toggleCollect = () => {
                         }
                     }
 
+                    >.right {
+                        display: flex;
+                        align-items: flex-start;
+                    }
+
                     .status {
                         background: linear-gradient(104.04deg, #88C6FF 0%, #1074EA 100%);
                         border-radius: 4px;
@@ -381,6 +469,7 @@ const toggleCollect = () => {
                         font-size: 12px;
                         line-height: 17px;
                         color: #FFFFFF;
+                        margin-left: auto;
 
                         &.unavailable {
                             background: linear-gradient(284.04deg, #ED7F1A 0%, #FEC24C 100%), #FF9330;

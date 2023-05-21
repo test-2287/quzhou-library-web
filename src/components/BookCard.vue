@@ -1,10 +1,14 @@
 <script setup>
 import { defineProps, ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from '@/components/Button.vue';
 import bookRankBgOrangeSmall from '@/assets/book-rank-bg-orange-small.svg';
 import bookRankBgBlueSmall from '@/assets/book-rank-bg-blue-small.svg'
 import bookRankBgOrangeBig from '@/assets/book-rank-bg-orange-big.svg';
 import bookRankBgBlueBig from '@/assets/book-rank-bg-blue-big.svg'
+import emptyCover from '@/assets/book-cover-empty.svg';
+
+const router = useRouter();
 
 const props = defineProps({
     size: {
@@ -60,7 +64,7 @@ const props = defineProps({
 <template>
     <div class="book-card flex" :class="{
         'small': size === 'small'
-    }">
+    }" @click="router.push('/book-detail')">
 
         <template v-if="rank">
             <div class="rank" v-if="size === 'small'" :style="{
@@ -71,7 +75,7 @@ const props = defineProps({
             }">{{ rank }}</div>
         </template>
 
-        <div class="book-image center left"><img src="" alt=""></div>
+        <div class="book-image center left"><img :src="image ? image : emptyCover" alt=""></div>
         <div class="right">
             <div class="book-name">{{ name }}</div>
 

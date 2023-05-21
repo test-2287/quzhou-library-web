@@ -112,6 +112,24 @@ a {
   }
 }
 
+.el-radio {
+  .el-radio__inner {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid #C1D4EF;
+  }
+
+  .el-radio__input.is-checked .el-radio__inner {
+    border-color: var(--color1);
+    background-color: #fff;
+    &::after {
+      width: 10px;
+      height: 10px;
+      background-color: var(--color1);
+    }
+  }
+}
+
 .bread-crumb {
   font-size: 12px;
   line-height: 18px;

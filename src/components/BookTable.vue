@@ -40,7 +40,19 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    hasReturnDate: {
+        type: Boolean,
+        default: false
+    },
+    hasBorrowReturnDate: {
+        type: Boolean,
+        default: false
+    },
     hasLeftTime: {
+        type: Boolean,
+        default: false
+    },
+    hasBorrowTime: {
         type: Boolean,
         default: false
     },
@@ -75,8 +87,11 @@ const bookData = reactive(
                     <th v-if="hasPublisher">出版社</th>
                 </template>
                 <th v-if="hasIsbn">ISBN</th>
-                <th v-if="hasBorrowDate">借还日期</th>
+                <th v-if="hasBorrowDate">借阅日期</th>
+                <th v-if="hasReturnDate">归还日期</th>
+                <th v-if="hasBorrowReturnDate">借还日期</th>
                 <th v-if="hasLeftTime">剩余时间</th>
+                <th v-if="hasBorrowTime">借阅时长</th>
                 <th v-if="hasOperation">操作</th>
             </tr>
         </thead>
@@ -112,6 +127,16 @@ const bookData = reactive(
                     <div class="cell-wrapper">{{ bookData.isbn }}</div>
                 </td>
                 <td v-if="hasBorrowDate">
+                    <div class="cell-wrapper">
+                        <div>2023年1月20日</div>
+                    </div>
+                </td>
+                <td v-if="hasReturnDate">
+                    <div class="cell-wrapper">
+                        <div>2023年1月20日</div>
+                    </div>
+                </td>
+                <td v-if="hasBorrowReturnDate">
                     <div class="cell-wrapper borrow-date">
                         <div>借阅日期: 2023年1月20日</div>
                         <div>还回日期: 2023年2月20日</div>
@@ -123,6 +148,11 @@ const bookData = reactive(
                             <div class="label center">离归还有</div>
                             <div class="value center">3天</div>
                         </div>
+                    </div>
+                </td>
+                <td v-if="hasBorrowTime">
+                    <div class="cell-wrapper flex">
+                        <div>30日</div>
                     </div>
                 </td>
                 <td v-if="hasOperation">

@@ -1,7 +1,15 @@
 <script setup>
 import UserCenter from '@/components/UserCenter.vue'
 import Button from '@/components/Button.vue'
+import SvgIcon from '@/components/SvgIcon.vue'
 import { Search } from '@element-plus/icons-vue'
+
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const cancelOrderDialogShow = ref(false)
 
 </script>
 
@@ -33,8 +41,9 @@ import { Search } from '@element-plus/icons-vue'
                                     </div>
                                 </div>
                                 <div class="right align-center">
-                                    <Button buttonStyle="line" class="button button-cancel">取消订单</Button>
-                                    <Button class="button button-check">查看订单</Button>
+                                    <Button buttonStyle="line" class="button button-cancel"
+                                        @click="cancelOrderDialogShow = true">取消订单</Button>
+                                    <Button class="button button-check" @click="router.push('/order-detail')">查看订单</Button>
                                 </div>
                             </div>
                             <div class="book-list flex">
@@ -44,19 +53,34 @@ import { Search } from '@element-plus/icons-vue'
                                 </div>
                             </div>
                         </div>
+
+                        <div class="pagination-box center">
+                            <el-pagination background layout="prev, pager, next" :total="100" class="order-pagination" />
+                        </div>
                     </el-tab-pane>
-                    <el-tab-pane label="待支付"></el-tab-pane>
+                    <el-tab-pane label="待支付">
+                        <div class="empty-box flex-column center">
+                            <SvgIcon name="book-detail-empty" class="icon-empty" />
+                            <div>抱歉！没有找到相关订单</div>
+                        </div>
+                    </el-tab-pane>
                     <el-tab-pane label="待处理"></el-tab-pane>
                     <el-tab-pane label="已处理"></el-tab-pane>
                     <el-tab-pane label="已取消"></el-tab-pane>
                 </el-tabs>
 
-
-                <div class="pagination-box center">
-                    <el-pagination background layout="prev, pager, next" :total="100" class="order-pagination" />
-                </div>
-                
             </div>
+
+            <el-dialog v-model="cancelOrderDialogShow" class="dialog-delete-confirm" :show-close="false"
+                :title="'确认取消订单吗？'">
+                <template #footer>
+                    <div class="dialog-footer justify-center">
+                        <Button buttonStyle="line" class="button-cancel" @click="cancelOrderDialogShow = false">取消</Button>
+                        <Button class="button-confirm" @click="() => { cancelOrderDialogShow = false }">确定</Button>
+                    </div>
+                </template>
+            </el-dialog>
+            
         </div>
     </UserCenter>
 </template>
@@ -215,10 +239,75 @@ import { Search } from '@element-plus/icons-vue'
             }
 
         }
-        
+
         .pagination-box {
             margin-top: 30px;
         }
+
+        .empty-box {
+            height: 350px;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 20px;
+            color: #B8CCEB;
+
+            .icon-empty {
+                width: 160px;
+                height: 160px;
+                margin-bottom: 20px;
+            }
+        }
     }
-}
-</style>
+
+
+    :deep(.el-dialog) {
+        border-radius: 8px;
+
+        .el-dialog__header {
+            text-align: center;
+            padding-bottom: 0;
+            margin-right: 0;
+        }
+
+        .el-dialog__body {
+            padding: 20px;
+        }
+
+        .el-dialog__footer {
+            padding-top: 0;
+        }
+
+        .el-dialog__title {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 23px;
+            color: #3A3A3A;
+        }
+    }
+
+    :deep(.dialog-delete-confirm) {
+        width: 220px;
+
+        .el-dialog__body {
+            padding: 0;
+        }
+
+        .dialog-footer {
+            padding: 0;
+            margin-top: 20px;
+
+            .button-cancel {
+                width: 80px;
+                height: 32px;
+                font-weight: 700;
+                margin-right: 20px;
+            }
+
+            .button-confirm {
+                width: 80px;
+                height: 32px;
+                font-weight: 700;
+            }
+        }
+    }
+}</style>

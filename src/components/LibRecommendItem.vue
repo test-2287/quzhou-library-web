@@ -1,14 +1,19 @@
-<script setup></script>
+<script setup>
+import libRecommend1 from '@/assets/lib-recommend-1.svg';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+</script>
 
 <template>
     <div class="recommend-item flex-column">
-        <div class="theme-image"><img src="" alt=""></div>
+        <div class="theme-image"><img :src="libRecommend1" alt=""></div>
         <div class="theme-title">一路向西 丝绸之路</div>
         <div class="theme-subtitle">中华文化的博大精深</div>
         <div class="theme-intro">
             中国的丝绸、瓷器、陶器、茶叶等大量珍贵产品和科学文化，除通过横贯大陆的陆上交通线路大量输往中亚、西亚和非洲、欧洲之外，也通过海上源源不断地销往东亚、大洋洲、美洲和世界各地。
         </div>
-        <div class="check-detail center">查看详情</div>
+        <div class="check-detail center"  @click="router.push('/lib-recommend-detail')">查看详情</div>
     </div>
 </template>
 

@@ -21,7 +21,7 @@ const renewResultShow = ref(false)
             </div>
 
 
-            <BookTable hasCheckbox hasAuthorPublisher hasBorrowDate hasLeftTime :hasIsbn="false" />
+            <BookTable hasCheckbox hasAuthorPublisher hasBorrowReturnDate hasLeftTime :hasIsbn="false" />
             <div class="actions space-between align-center">
                 <el-checkbox class="round">全选</el-checkbox>
                 <div class="align-center">

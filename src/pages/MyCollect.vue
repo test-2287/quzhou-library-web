@@ -2,6 +2,10 @@
 import UserCenter from '@/components/UserCenter.vue';
 import BookTable from '@/components/BookTable.vue';
 import Button from '@/components/Button.vue';
+import { ref } from 'vue'
+
+const cancelCollectDialogShow = ref(false)
+
 </script>
 
 <template>
@@ -17,10 +21,21 @@ import Button from '@/components/Button.vue';
                 <el-checkbox class="round">全选</el-checkbox>
                 <div class="right align-center">
                     <div class="label">已选中1本图书</div>
-                    <Button buttonStyle="line">取消收藏</Button>
+                    <Button buttonStyle="line" @click="cancelCollectDialogShow = true">取消收藏</Button>
                     <Button>加入书车</Button>
                 </div>
             </div>
+
+            <el-dialog v-model="cancelCollectDialogShow" class="dialog-delete-confirm" :show-close="false"
+                :title="'确认取消收藏吗？'">
+                <template #footer>
+                    <div class="dialog-footer justify-center">
+                        <Button buttonStyle="line" class="button-cancel"
+                            @click="cancelCollectDialogShow = false">取消</Button>
+                        <Button class="button-confirm" @click="() => { cancelCollectDialogShow = false }">确定</Button>
+                    </div>
+                </template>
+            </el-dialog>
         </div>
     </UserCenter>
 </template>
@@ -54,7 +69,9 @@ import Button from '@/components/Button.vue';
         }
 
         .right {
-            > * {margin-right: 20px;}
+            >* {
+                margin-right: 20px;
+            }
         }
 
         .label {
@@ -72,6 +89,57 @@ import Button from '@/components/Button.vue';
 
 
 
+    }
+
+    :deep(.el-dialog) {
+        border-radius: 8px;
+
+        .el-dialog__header {
+            text-align: center;
+            padding-bottom: 0;
+            margin-right: 0;
+        }
+
+        .el-dialog__body {
+            padding: 20px;
+        }
+
+        .el-dialog__footer {
+            padding-top: 0;
+        }
+
+        .el-dialog__title {
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 23px;
+            color: #3A3A3A;
+        }
+    }
+
+    :deep(.dialog-delete-confirm) {
+        width: 220px;
+
+        .el-dialog__body {
+            padding: 0;
+        }
+
+        .dialog-footer {
+            padding: 0;
+            margin-top: 20px;
+
+            .button-cancel {
+                width: 80px;
+                height: 32px;
+                font-weight: 700;
+                margin-right: 20px;
+            }
+
+            .button-confirm {
+                width: 80px;
+                height: 32px;
+                font-weight: 700;
+            }
+        }
     }
 
 }

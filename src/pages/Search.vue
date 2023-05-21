@@ -28,7 +28,7 @@ const bookInfo = {
                         </Button>
                         <Button buttonStyle="line">
                             <span class="text">更多</span>
-                            <SvgIcon name="icon-down" class="icon-more"/>
+                            <SvgIcon name="icon-down" class="icon-more" />
                         </Button>
                     </div>
                 </div>
@@ -98,15 +98,18 @@ const bookInfo = {
                 </div>
 
                 <div class="result-box">
-
-                    <BookCardVertical v-bind="bookInfo" :isSearch="true" stockStatus="store"/>
+                    <BookCardVertical v-bind="bookInfo" :isSearch="true" stockStatus="store" />
                     <BookCardVertical v-bind="bookInfo" :isSearch="true" stockStatus="lib" v-for="item in 19" />
                 </div>
+
                 <div class="pagination-box">
-                    <!-- 20 -->
-                    <el-pagination background 
-                    layout="prev, pager, next" :total="400" />
+                    <el-pagination background layout="prev, pager, next" :total="400" />
                 </div>
+            </div>
+
+            <div class="page-empty-box flex-column center">
+                <SvgIcon name="book-detail-empty" class="icon-empty" />
+                <div>抱歉！没有找到相关的书籍</div>
             </div>
         </div>
     </div>
@@ -227,10 +230,12 @@ const bookInfo = {
     .result-box {
         display: flex;
         flex-wrap: wrap;
+
         .book-item-vertical {
             padding-bottom: 15px;
             margin-right: 14px;
             margin-bottom: 20px;
+
             &:nth-child(5n) {
                 margin-right: 0;
             }
@@ -244,5 +249,22 @@ const bookInfo = {
         justify-content: center;
     }
 
+}
+
+.page-empty-box {
+    background-color: #fff;
+    border-radius: 8px;
+    height: 500px;
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #B8CCEB;
+
+    .icon-empty {
+        width: 160px;
+        height: 160px;
+        margin-bottom: 20px;
+    }
 }
 </style>

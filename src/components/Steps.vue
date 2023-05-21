@@ -17,11 +17,11 @@ const props = defineProps({
             <span>我的书单</span>
         </div>
         <div class="step align-center" :class="{ 'active': step >= 2 }">
-            <SvgIcon :name="`icon-step-order-${step == 2 ? 'fill' : 'line'}`" class="icon" />
+            <SvgIcon :name="`icon-step-order-${step >= 2 ? 'fill' : 'line'}`" class="icon" />
             <span>填写订单</span>
         </div>
         <div class="step align-center" :class="{ 'active': step >= 3 }">
-            <SvgIcon :name="`icon-step-success-${step == 3 ? 'fill' : 'line'}`" class="icon" />
+            <SvgIcon :name="`icon-step-success-${step >= 3 ? 'fill' : 'line'}`" class="icon" />
             <span>提交订单</span>
         </div>
     </div>

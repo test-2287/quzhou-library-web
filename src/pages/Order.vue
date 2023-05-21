@@ -4,6 +4,9 @@ import BookTable from '@/components/BookTable.vue';
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/SvgIcon.vue';
 import PopConfirm from '@/components/PopConfirm.vue';
+import { ref, reactive } from 'vue';
+
+const paymentMethod = ref('')
 
 </script>
 
@@ -24,9 +27,7 @@ import PopConfirm from '@/components/PopConfirm.vue';
                     </div>
 
                     <div class="content">
-                        <div class="receiver-info-box space-between" :class="{
-                            'active': item == 1
-                        }" v-for="item in 2">
+                        <div class="receiver-info-box space-between active">
                             <div class="flex">
                                 <el-checkbox class="round"></el-checkbox>
                                 <div class="info-list">
@@ -81,14 +82,16 @@ import PopConfirm from '@/components/PopConfirm.vue';
                 <div class="container align-center payment-method">
                     <div class="label">支付方式</div>
                     <div class="align-center">
-                        <div class="method wechat active">
-                            <el-checkbox class="round">微信</el-checkbox>
-                            <SvgIcon name="icon-wechat" class="icon"/>
-                        </div>
-                        <div class="method alipay">
-                            <el-checkbox class="round">支付宝</el-checkbox>
-                            <SvgIcon name="icon-alipay" class="icon"/>
-                        </div>
+                        <el-radio-group v-model="paymentMethod">
+                            <div class="method wechat" :class="{'active': paymentMethod === 'wechat'}">
+                                <el-radio class="round" :label="'wechat'">微信</el-radio>
+                                <SvgIcon name="icon-wechat" class="icon" />
+                            </div>
+                            <div class="method alipay" :class="{'active': paymentMethod === 'alipay'}">
+                                <el-radio class="round" :label="'alipay'">支付宝</el-radio>
+                                <SvgIcon name="icon-alipay" class="icon" />
+                            </div>
+                        </el-radio-group>
                     </div>
                 </div>
 
@@ -156,9 +159,11 @@ import PopConfirm from '@/components/PopConfirm.vue';
             border-radius: 6px;
             padding: 20px 30px 24px 20px;
             border-radius: 6px;
+
             &:not(:last-child) {
                 margin-bottom: 20px;
             }
+
             &.active {
                 border: 1px solid #C1D4EF;
             }
@@ -185,11 +190,12 @@ import PopConfirm from '@/components/PopConfirm.vue';
                 }
             }
 
-        
+
             .icon-box {
                 width: 24px;
                 height: 24px;
             }
+
             .icon-edit,
             .icon-delete {
                 width: 24px;
@@ -253,9 +259,11 @@ import PopConfirm from '@/components/PopConfirm.vue';
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
+
                 &.active {
                     border: 1px solid var(--color1);
                 }
+
                 &:first-child {
                     margin-right: 20px;
                 }
@@ -283,5 +291,4 @@ import PopConfirm from '@/components/PopConfirm.vue';
             }
         }
     }
-}
-</style>
+}</style>

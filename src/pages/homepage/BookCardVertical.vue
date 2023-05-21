@@ -1,5 +1,9 @@
 <script setup>
 import { defineProps, ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import emptyCover from '@/assets/book-cover-empty.svg';
+
+const router = useRouter();
 
 const props = defineProps({
     name: {
@@ -42,9 +46,9 @@ const props = defineProps({
     <div class="book-item-vertical" :class="{
         'small': isSmall,
         'search': isSearch,
-    }">
+    }" @click="router.push('/book-detail')">
         <div class="image-container center">
-            <img src="" alt="">
+            <img :src="img ? img : emptyCover" alt="" >
         </div>
         <div class="book-name">{{ name }}</div>
         <div class="book-author">{{ author }}</div>

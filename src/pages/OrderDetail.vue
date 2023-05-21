@@ -5,8 +5,16 @@ import Button from '@/components/Button.vue'
 import BookTable from '@/components/BookTable.vue'
 
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+
+const router = useRouter()
+
+const paymentMethod = ref('')
 
 const deliveryDialogShow = ref(false)
+
+const cancelOrderDialogShow = ref(false)
 </script>
 
 <template>
@@ -80,18 +88,21 @@ const deliveryDialogShow = ref(false)
             </div>
             <div class="pending-payment">
                 <div class="payment-method flex">
-                    <div class="method wechat space-between align-center">
-                        <el-checkbox class="round">微信</el-checkbox>
-                        <SvgIcon name="icon-wechat" class="icon" />
-                    </div>
-                    <div class="method alipay space-between aligin-center">
-                        <el-checkbox class="round">支付宝</el-checkbox>
-                        <SvgIcon name="icon-alipay" class="icon" />
-                    </div>
+                    <el-radio-group v-model="paymentMethod">
+                        <div class="method wechat space-between align-center" :class="{'active': paymentMethod === 'wechat'}">
+                            <el-radio class="round" label="wechat">微信</el-radio>
+                            <SvgIcon name="icon-wechat" class="icon" />
+                        </div>
+                        <div class="method alipay space-between aligin-center" :class="{'active': paymentMethod === 'alipay'}">
+                            <el-radio class="round" label="alipay">支付宝</el-radio>
+                            <SvgIcon name="icon-alipay" class="icon" />
+                        </div>
+                    </el-radio-group>
                 </div>
                 <div class="actions">
-                    <Button class="button button-cancel" buttonStyle="line">取消订单</Button>
-                    <Button class="button button-pay">立即支付</Button>
+                    <Button class="button button-cancel" buttonStyle="line"
+                        @click="cancelOrderDialogShow = true">取消订单</Button>
+                    <Button class="button button-pay" @click="router.push('/pay-result')">立即支付</Button>
                 </div>
             </div>
 
@@ -134,6 +145,17 @@ const deliveryDialogShow = ref(false)
                     </div>
 
                 </div>
+            </el-dialog>
+
+
+            <el-dialog v-model="cancelOrderDialogShow" class="dialog-delete-confirm" :show-close="false"
+                :title="'确认取消订单吗？'">
+                <template #footer>
+                    <div class="dialog-footer justify-center">
+                        <Button buttonStyle="line" class="button-cancel" @click="cancelOrderDialogShow = false">取消</Button>
+                        <Button class="button-confirm" @click="() => { cancelOrderDialogShow = false }">确定</Button>
+                    </div>
+                </template>
             </el-dialog>
 
         </div>
@@ -357,6 +379,38 @@ const deliveryDialogShow = ref(false)
             font-size: 16px;
             line-height: 23px;
             color: #33608A;
+        }
+    }
+
+    &:deep(.dialog-delete-confirm) {
+        width: 220px;
+
+        .el-dialog__header {
+            border: none;
+            margin-right: 0;
+            text-align: center;
+        }
+
+        .el-dialog__body {
+            padding: 0;
+        }
+
+        .dialog-footer {
+            padding: 0;
+            margin-top: 20px;
+
+            .button-cancel {
+                width: 80px;
+                height: 32px;
+                font-weight: 700;
+                margin-right: 20px;
+            }
+
+            .button-confirm {
+                width: 80px;
+                height: 32px;
+                font-weight: 700;
+            }
         }
     }
 

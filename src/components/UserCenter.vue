@@ -1,5 +1,8 @@
 <script setup>
 import SvgIcon from '@/components/SvgIcon.vue'
+
+import { useRouter } from 'vue-router'
+const router = useRouter()
 </script>
 
 <template>
@@ -21,26 +24,34 @@ import SvgIcon from '@/components/SvgIcon.vue'
                     </div>
 
                     <div class="user-data">
-                        <div class="item">
+                        <div class="item" @click="router.push('/my-borrow')">
                             <div class="number">10</div>
                             <div class="label">我的借阅</div>
                         </div>
-                        <div class="item">
+                        <div class="item" @click="router.push('/my-booklist')">
                             <div class="number">6</div>
                             <div class="label">我的书单</div>
                         </div>
                     </div>
                 </div>
                 <div class="menu">
-                    <div class="menu-item active">
-                        <SvgIcon name="usercenter-order" class="icon"/>
-                        我的订单</div>
-                    <div class="menu-item">
-                        <SvgIcon name="usercenter-collect" class="icon" />我的收藏</div>
-                    <div class="menu-item">
-                        <SvgIcon name="usercenter-pwd" class="icon" />修改密码</div>
-                    <div class="menu-item">
-                        <SvgIcon name="usercenter-address" class="icon" />地址管理</div>
+                    <div class="menu-item active" @click="router.push('/order-list')">
+                        <SvgIcon name="usercenter-order" class="icon" />
+                        我的订单
+                    </div>
+                    <div class="menu-item active" @click="router.push('/borrow-history')">
+                        <SvgIcon name="usercenter-borrow-history" class="icon" />
+                        借阅历史
+                    </div>
+                    <div class="menu-item" @click="router.push('/my-collect')">
+                        <SvgIcon name="usercenter-collect" class="icon" />我的收藏
+                    </div>
+                    <div class="menu-item" @click="router.push('/changepwd')">
+                        <SvgIcon name="usercenter-pwd" class="icon" />修改密码
+                    </div>
+                    <div class="menu-item" @click="router.push('/receiver-manage')">
+                        <SvgIcon name="usercenter-address" class="icon" />地址管理
+                    </div>
                 </div>
             </div>
             <div class="main-content">
@@ -132,6 +143,8 @@ import SvgIcon from '@/components/SvgIcon.vue'
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                cursor: pointer;
+
                 &:first-child {
                     border-right: 1px solid #e4e4e4;
                 }
@@ -166,6 +179,7 @@ import SvgIcon from '@/components/SvgIcon.vue'
             color: #33608A;
             cursor: pointer;
             font-weight: 500;
+
             .icon {
                 width: 24px;
                 height: 24px;
@@ -177,5 +191,4 @@ import SvgIcon from '@/components/SvgIcon.vue'
 
 .main-content {
     width: 875px;
-}
-</style>
+}</style>
