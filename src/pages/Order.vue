@@ -4,9 +4,17 @@ import BookTable from '@/components/BookTable.vue';
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/SvgIcon.vue';
 import PopConfirm from '@/components/PopConfirm.vue';
+import ReceiverForm from '@/components/ReceiverForm.vue';
 import { ref, reactive } from 'vue';
 
 const paymentMethod = ref('')
+const receiverFormShow = ref(false)
+
+const updateReceiverFormShow = (value) => {
+    receiverFormShow.value = value
+}
+
+const receiverManageDialogShow = ref(false)
 
 </script>
 
@@ -22,14 +30,13 @@ const paymentMethod = ref('')
                     <div class="header space-between">
                         <div class="title align-center">收件人信息</div>
                         <div class="action-box">
-                            <Button>添加新地址</Button>
+                            <Button @click="receiverManageDialogShow = true">管理地址</Button>
                         </div>
                     </div>
 
                     <div class="content">
-                        <div class="receiver-info-box space-between active">
+                        <div class="receiver-info-box space-between">
                             <div class="flex">
-                                <el-checkbox class="round"></el-checkbox>
                                 <div class="info-list">
                                     <div class="info-item">
                                         <div class="item-label">收件人</div>
@@ -44,12 +51,6 @@ const paymentMethod = ref('')
                                         <div class="item-value">湖南省张家界市慈利县杨柳铺乡 8 单元 248 室</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="align-center">
-                                <SvgIcon name="icon-edit" class="icon-edit" />
-                                <PopConfirm title="删除地址吗？" class="icon-box">
-                                    <SvgIcon name="icon-delete" class="icon-delete" />
-                                </PopConfirm>
                             </div>
                         </div>
                     </div>
@@ -83,11 +84,11 @@ const paymentMethod = ref('')
                     <div class="label">支付方式</div>
                     <div class="align-center">
                         <el-radio-group v-model="paymentMethod">
-                            <div class="method wechat" :class="{'active': paymentMethod === 'wechat'}">
+                            <div class="method wechat" :class="{ 'active': paymentMethod === 'wechat' }">
                                 <el-radio class="round" :label="'wechat'">微信</el-radio>
                                 <SvgIcon name="icon-wechat" class="icon" />
                             </div>
-                            <div class="method alipay" :class="{'active': paymentMethod === 'alipay'}">
+                            <div class="method alipay" :class="{ 'active': paymentMethod === 'alipay' }">
                                 <el-radio class="round" :label="'alipay'">支付宝</el-radio>
                                 <SvgIcon name="icon-alipay" class="icon" />
                             </div>
@@ -101,6 +102,65 @@ const paymentMethod = ref('')
                 </div>
             </div>
         </div>
+
+        <ReceiverForm :receiverFormShow="receiverFormShow" @update:receiverFormShow=updateReceiverFormShow />
+
+        <el-dialog class="receiver-manage-dialog" v-model="receiverManageDialogShow">
+            <div class="receiver-info-box space-between active">
+                <div class="flex">
+                    <el-checkbox class="round"></el-checkbox>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="item-label">收件人</div>
+                            <div class="item-value">赵天明</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="item-label">手机号</div>
+                            <div class="item-value">12666666666</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="item-label">收件地址</div>
+                            <div class="item-value">湖南省张家界市慈利县杨柳铺乡 8 单元 248 室</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-center">
+                    <SvgIcon name="icon-edit" class="icon-edit" @click="receiverFormShow = true" />
+                    <PopConfirm title="删除地址吗？" class="icon-box">
+                        <SvgIcon name="icon-delete" class="icon-delete" />
+                    </PopConfirm>
+                </div>
+            </div>
+            <div class="receiver-info-box space-between">
+                <div class="flex">
+                    <el-checkbox class="round"></el-checkbox>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <div class="item-label">收件人</div>
+                            <div class="item-value">赵天明</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="item-label">手机号</div>
+                            <div class="item-value">12666666666</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="item-label">收件地址</div>
+                            <div class="item-value">湖南省张家界市慈利县杨柳铺乡 8 单元 248 室</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-center">
+                    <SvgIcon name="icon-edit" class="icon-edit" @click="receiverFormShow = true"/>
+                    <PopConfirm title="删除地址吗？" class="icon-box">
+                        <SvgIcon name="icon-delete" class="icon-delete" />
+                    </PopConfirm>
+                </div>
+            </div>
+            <div class="receiver-manage-dialog-action justify-center">
+                <Button class="button" @click="receiverFormShow = true">添加新地址</Button>
+            </div>
+        </el-dialog>
+
     </div>
 </template>
 
@@ -153,63 +213,6 @@ const paymentMethod = ref('')
                 }
             }
         }
-
-        .receiver-info-box {
-            background: #FBFBFB;
-            border-radius: 6px;
-            padding: 20px 30px 24px 20px;
-            border-radius: 6px;
-
-            &:not(:last-child) {
-                margin-bottom: 20px;
-            }
-
-            &.active {
-                border: 1px solid #C1D4EF;
-            }
-
-            .el-checkbox {
-                align-self: center;
-                margin-right: 24px;
-            }
-
-            .info-item {
-                display: flex;
-                font-size: 14px;
-                line-height: 20px;
-                margin-bottom: 8px;
-
-                .item-label {
-                    width: 80px;
-                    color: #8AA2C5;
-                    margin-right: 10px;
-                }
-
-                .item-value {
-                    color: #33608A
-                }
-            }
-
-
-            .icon-box {
-                width: 24px;
-                height: 24px;
-            }
-
-            .icon-edit,
-            .icon-delete {
-                width: 24px;
-                height: 24px;
-                color: #bbb;
-            }
-
-            .icon-edit {
-                margin-right: 40px;
-            }
-
-
-        }
-
 
         &.order-details {
             padding: 30px 33px 33px;
@@ -291,4 +294,73 @@ const paymentMethod = ref('')
             }
         }
     }
-}</style>
+}
+
+.receiver-info-box {
+    background: #FBFBFB;
+    border-radius: 6px;
+    padding: 20px 30px 24px 20px;
+    border-radius: 6px;
+
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+
+    &.active {
+        border: 1px solid #C1D4EF;
+    }
+
+    .el-checkbox {
+        align-self: center;
+        margin-right: 24px;
+    }
+
+    .info-item {
+        display: flex;
+        font-size: 14px;
+        line-height: 20px;
+        margin-bottom: 8px;
+
+        .item-label {
+            width: 80px;
+            color: #8AA2C5;
+            margin-right: 10px;
+        }
+
+        .item-value {
+            color: #33608A
+        }
+    }
+
+
+    .icon-box {
+        width: 24px;
+        height: 24px;
+    }
+
+    .icon-edit,
+    .icon-delete {
+        width: 24px;
+        height: 24px;
+        color: #bbb;
+    }
+
+    .icon-edit {
+        margin-right: 40px;
+    }
+
+
+}
+
+.receiver-manage-dialog-action {
+    .button {
+        width: 200px;
+        height: 40px;
+    }
+}
+
+:deep(.receiver-manage-dialog) {
+    border-radius: 8px;
+    
+}
+</style>

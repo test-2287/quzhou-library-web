@@ -1,8 +1,8 @@
 <script setup>
 import { ref, defineProps, reactive } from 'vue';
 import Button from '@/components/Button.vue';
-
 import PopConfirm from './PopConfirm.vue';
+import emptyCover from '@/assets/book-cover-empty.svg';
 
 const confirmDelete = () => {
     console.log('confirm delete')
@@ -68,7 +68,8 @@ const bookData = reactive(
         name: '《中国古代文学史》',
         author: '[美] 菲利普·朱迪狄欧 著',
         publisher: '北京大学出版社',
-        isbn: '978-7301-286758'
+        isbn: '978-7301-286758',
+        img: ''
     }
 )
 
@@ -103,7 +104,7 @@ const bookData = reactive(
                         'padding-left': '20px'
                     }">
                         <el-checkbox class="round" v-if="hasCheckbox"></el-checkbox>
-                        <div class="book-image"><img src="" alt=""></div>
+                        <div class="book-image"><img :src="bookData.img ? bookData.img : emptyCover" alt=""></div>
                         <div class="book-name">{{ bookData.name }}</div>
                     </div>
                 </td>

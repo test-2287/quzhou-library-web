@@ -1,6 +1,6 @@
 <script setup>
 import Button from '@/components/Button.vue';
-import { ref, reactive, defineProps, onMounted, watchEffect } from 'vue';
+import { ref, reactive, toRef, defineProps, defineEmits, onMounted, watchEffect, watch } from 'vue';
 
 const props = defineProps({
     title: {
@@ -14,20 +14,25 @@ const props = defineProps({
 })
 
 const formShow = ref(false)
-watchEffect(() => {
-    formShow.value = props.receiverFormShow
+watch(() => props.receiverFormShow, (newValue) => {
+    formShow.value = newValue
+})
+watch(formShow, (newValue) => {
+    emits('update:receiverFormShow', newValue)
 })
 
-
 // 表单校验见 element-plus form 文档
+
+const emits = defineEmits(['update:receiverFormShow'])
+
 const submit = () => {
     console.log('submit')
-    receiverFormShow.value = false
+    emits('update:receiverFormShow', false);
 }
 
 const cancelSubmit = () => {
     console.log('cancel submit')
-    receiverFormShow.value = false
+    emits('update:receiverFormShow', false);
 }
 
 </script>

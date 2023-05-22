@@ -8,6 +8,9 @@ import ReceiverForm from '@/components/ReceiverForm.vue';
 import { ref, reactive } from 'vue';
 
 const receiverFormShow = ref(false)
+const updateReceiverFormShow = (value) => {
+    receiverFormShow.value = value
+}
 
 </script>
 
@@ -16,7 +19,7 @@ const receiverFormShow = ref(false)
         <div class="receiver-manage">
             <div class="header space-between align-center">
                 <div class="title">地址管理</div>
-                <Button class="receiver-add">添加新地址</Button>
+                <Button class="receiver-add" @click="receiverFormShow = true">添加新地址</Button>
             </div>
             <table class="receiver-table">
                 <thead>
@@ -50,7 +53,7 @@ const receiverFormShow = ref(false)
                 <el-pagination background layout="prev, pager, next" :total="100"></el-pagination>
             </div>
 
-            <ReceiverForm :receiverFormShow="receiverFormShow"/>
+            <ReceiverForm :receiverFormShow="receiverFormShow" @update:receiverFormShow="updateReceiverFormShow"/>
             
         </div>
     </UserCenter>
