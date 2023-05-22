@@ -165,6 +165,10 @@ provide('loginDialogShow', loginDialogShow)
   </div>
 
   <el-dialog class="login-dialog" v-model="loginDialogShow">
+    <div class="welcome-text">
+      <div>欢迎您登录</div>
+      <div>衢州市图书馆</div>
+    </div>
     <div class="dialog-wrapper">
       <div class="login" v-if="formType === 'login'">
         <div class="tabs flex space-between">
