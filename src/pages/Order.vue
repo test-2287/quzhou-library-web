@@ -125,6 +125,7 @@ const receiverManageDialogShow = ref(false)
                     </div>
                 </div>
                 <div class="align-center">
+                    <div class="default-text">默认地址</div>
                     <SvgIcon name="icon-edit" class="icon-edit" @click="receiverFormShow = true" />
                     <PopConfirm title="删除地址吗？" class="icon-box">
                         <SvgIcon name="icon-delete" class="icon-delete" />
@@ -150,7 +151,8 @@ const receiverManageDialogShow = ref(false)
                     </div>
                 </div>
                 <div class="align-center">
-                    <SvgIcon name="icon-edit" class="icon-edit" @click="receiverFormShow = true"/>
+                    <div class="default-text">默认地址</div>
+                    <SvgIcon name="icon-edit" class="icon-edit" @click="receiverFormShow = true" />
                     <PopConfirm title="删除地址吗？" class="icon-box">
                         <SvgIcon name="icon-delete" class="icon-delete" />
                     </PopConfirm>
@@ -349,6 +351,13 @@ const receiverManageDialogShow = ref(false)
         margin-right: 40px;
     }
 
+    .default-text {
+        font-size: 14px;
+        line-height: 20px;
+        color: #8AA2C5;
+        margin-right: 57px;
+    }
+
 
 }
 
@@ -361,6 +370,6 @@ const receiverManageDialogShow = ref(false)
 
 :deep(.receiver-manage-dialog) {
     border-radius: 8px;
-    
+
 }
 </style>
