@@ -88,6 +88,9 @@ provide('loginDialogShow', loginDialogShow)
         <div class="right-item shopping-cart">
           <SvgIcon name="icon-shopping-cart" class="icon" />
           我的书车
+          <div class="cart-num">
+            <span>6</span>
+          </div>
         </div>
         <div class="right-item order-list">
           <SvgIcon name="icon-my-order" class="icon" />
@@ -313,6 +316,22 @@ provide('loginDialogShow', loginDialogShow)
 
       }
 
+    }
+
+    .shopping-cart {
+      position: relative;
+      .cart-num {
+        position: absolute;
+        left: 13px;
+        top: -4px;
+        height: 12px;
+        padding: 0 5px;
+        background-color: #F38A0F;
+        color: #fff;
+        font-size: 10px;
+        line-height: 12px;
+        border-radius: 6px;
+      }
     }
 
   }
